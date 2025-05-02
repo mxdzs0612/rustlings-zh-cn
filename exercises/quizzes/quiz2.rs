@@ -28,7 +28,20 @@ mod my_module {
     use super::Command;
 
     // TODO: 按照上述要求实现该函数。
-    // pub fn transformer(input: ???) -> ??? { ??? }
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
+        let mut output: Vec<String> = vec![];
+        for (s, c) in input.iter() {
+       	    let res = match c {
+                Command::Uppercase => s.to_uppercase(),
+                Command::Trim => s.trim().to_string(),
+                Command::Append(n) => {
+                    s.to_owned()+&"bar".repeat(*n)
+                },
+            };
+            output.push(res);
+        }
+        output
+    }
 }
 
 fn main() {
@@ -38,7 +51,7 @@ fn main() {
 #[cfg(test)]
 mod tests {
     // TODO: 我们需要引入什么才能使 `transformer` 在作用域内可用呢?
-    // use ???;
+    use crate::my_module::transformer;
     use super::Command;
 
     #[test]
