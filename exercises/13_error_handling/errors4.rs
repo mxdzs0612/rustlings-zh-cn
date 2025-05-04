@@ -10,7 +10,16 @@ struct PositiveNonzeroInteger(u64);
 impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<Self, CreationError> {
         // TODO: 此函数不应该总是返回 `Ok`.
-        Ok(Self(value as u64))
+        //if value < 0 {
+        //    return Err(CreationError::Negative);
+        //} else if value == 0 {
+        //    return Err(CreationError::Zero);
+        //}
+        match value.cmp(&0) {
+            std::cmp::Ordering::Less => Err(CreationError::Negative),
+            std::cmp::Ordering::Equal => Err(CreationError::Zero),
+            std::cmp::Ordering::Greater => Ok(Self(value as u64)),
+        }
     }
 }
 
